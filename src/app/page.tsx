@@ -1,20 +1,26 @@
 "use client";
 
-import { useState } from "react";
-import { ColorPicker } from "./Components/ColorPicker";
+import { NavLink } from "./Components/NavLink";
+import { QRCodeForm } from "./Components/QRCodeForm";
 
 export default function Home() {
-  const [color, setColor] = useState("#000000");
-
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <ColorPicker 
-          label="QR Code Color" 
-          value={color} 
-          onChange={setColor} 
-        />
-      </main>
+    <div className="min-h-screen bg-gray-50 p-8">
+      <nav className="mb-8">
+        <NavLink href="/">
+          Home
+        </NavLink>
+      </nav>
+      
+      <div className="max-w-6xl mx-auto">
+        <h1 className="text-4xl font-bold text-center mb-12 text-gray-800">
+          Professional QR Code Generator
+        </h1>
+        
+        <QRCodeForm onSave={async (data) => {
+          console.log('Saving QR code:', data);
+        }} />
+      </div>
     </div>
   );
 }
