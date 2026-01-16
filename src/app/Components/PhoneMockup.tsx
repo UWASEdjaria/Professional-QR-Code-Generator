@@ -1,5 +1,3 @@
-import { User, Phone, Mail, Building, MapPin, Globe } from 'lucide-react';
-
 interface ContactData {
   firstName: string;
   lastName: string;
@@ -13,6 +11,7 @@ interface ContactData {
   zip: string;
   country: string;
   website: string;
+  profileImage?: string;
 }
 
 interface PhoneMockupProps {
@@ -76,10 +75,18 @@ export function PhoneMockup({ contactData, accentColor }: PhoneMockupProps) {
           >
             {/* Avatar */}
             <div 
-              className="w-20 h-20 rounded-full mx-auto mb-3 flex items-center justify-center text-white text-2xl font-bold shadow-lg"
+              className="w-20 h-20 rounded-full mx-auto mb-3 flex items-center justify-center text-white text-2xl font-bold shadow-lg overflow-hidden"
               style={{ backgroundColor: accentColor }}
             >
-              {initials}
+              {contactData.profileImage ? (
+                <img 
+                  src={contactData.profileImage} 
+                  alt="Profile" 
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                initials
+              )}
             </div>
             
             {/* Name */}
@@ -100,14 +107,18 @@ export function PhoneMockup({ contactData, accentColor }: PhoneMockupProps) {
             {/* Phone */}
             <div className="flex items-center gap-3 py-2.5 border-b border-gray-200">
               <div 
-                className="w-8 h-8 rounded-full flex items-center justify-center"
-                style={{ backgroundColor: accentColor + '20' }}
+                className="w-8 h-8 rounded-full flex items-center justify-center text-sm cursor-pointer hover:bg-gray-100"
+                style={{ backgroundColor: accentColor + '20', color: accentColor }}
+                onClick={() => phone && window.open(`tel:${phone}`, '_self')}
               >
-                <Phone className="w-4 h-4" style={{ color: accentColor }} />
+                📱
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-xs text-gray-500">mobile</p>
-                <p className="text-sm text-gray-900 truncate">
+                <p 
+                  className="text-sm text-gray-900 truncate cursor-pointer hover:underline"
+                  onClick={() => phone && window.open(`tel:${phone}`, '_self')}
+                >
                   {phone || '(000) 000-0000'}
                 </p>
               </div>
@@ -116,14 +127,18 @@ export function PhoneMockup({ contactData, accentColor }: PhoneMockupProps) {
             {/* Email */}
             <div className="flex items-center gap-3 py-2.5 border-b border-gray-200">
               <div 
-                className="w-8 h-8 rounded-full flex items-center justify-center"
-                style={{ backgroundColor: accentColor + '20' }}
+                className="w-8 h-8 rounded-full flex items-center justify-center text-sm cursor-pointer hover:bg-gray-100"
+                style={{ backgroundColor: accentColor + '20', color: accentColor }}
+                onClick={() => email && window.open(`mailto:${email}`, '_self')}
               >
-                <Mail className="w-4 h-4" style={{ color: accentColor }} />
+                ✉️
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-xs text-gray-500">email</p>
-                <p className="text-sm text-gray-900 truncate">
+                <p 
+                  className="text-sm text-gray-900 truncate cursor-pointer hover:underline"
+                  onClick={() => email && window.open(`mailto:${email}`, '_self')}
+                >
                   {email || 'email@example.com'}
                 </p>
               </div>
@@ -133,10 +148,10 @@ export function PhoneMockup({ contactData, accentColor }: PhoneMockupProps) {
             {company && (
               <div className="flex items-center gap-3 py-2.5 border-b border-gray-200">
                 <div 
-                  className="w-8 h-8 rounded-full flex items-center justify-center"
-                  style={{ backgroundColor: accentColor + '20' }}
+                  className="w-8 h-8 rounded-full flex items-center justify-center text-sm"
+                  style={{ backgroundColor: accentColor + '20', color: accentColor }}
                 >
-                  <Building className="w-4 h-4" style={{ color: accentColor }} />
+                  🏢
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-xs text-gray-500">company</p>
@@ -149,10 +164,10 @@ export function PhoneMockup({ contactData, accentColor }: PhoneMockupProps) {
             {hasAddress && (
               <div className="flex items-center gap-3 py-2.5 border-b border-gray-200">
                 <div 
-                  className="w-8 h-8 rounded-full flex items-center justify-center"
-                  style={{ backgroundColor: accentColor + '20' }}
+                  className="w-8 h-8 rounded-full flex items-center justify-center text-sm"
+                  style={{ backgroundColor: accentColor + '20', color: accentColor }}
                 >
-                  <MapPin className="w-4 h-4" style={{ color: accentColor }} />
+                  📍
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-xs text-gray-500">address</p>
@@ -165,14 +180,20 @@ export function PhoneMockup({ contactData, accentColor }: PhoneMockupProps) {
             {website && (
               <div className="flex items-center gap-3 py-2.5">
                 <div 
-                  className="w-8 h-8 rounded-full flex items-center justify-center"
-                  style={{ backgroundColor: accentColor + '20' }}
+                  className="w-8 h-8 rounded-full flex items-center justify-center text-sm cursor-pointer hover:bg-gray-100"
+                  style={{ backgroundColor: accentColor + '20', color: accentColor }}
+                  onClick={() => window.open(website.startsWith('http') ? website : `https://${website}`, '_blank')}
                 >
-                  <Globe className="w-4 h-4" style={{ color: accentColor }} />
+                  🌐
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-xs text-gray-500">website</p>
-                  <p className="text-sm text-gray-900 truncate">{website}</p>
+                  <p 
+                    className="text-sm text-gray-900 truncate cursor-pointer hover:underline"
+                    onClick={() => window.open(website.startsWith('http') ? website : `https://${website}`, '_blank')}
+                  >
+                    {website}
+                  </p>
                 </div>
               </div>
             )}
